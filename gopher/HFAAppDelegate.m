@@ -9,11 +9,16 @@
 #import "HFAAppDelegate.h"
 
 #import "HFAViewController.h"
+#import "HFAGopherProtocol.h"
 
 @implementation HFAAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Init Gopher protocol
+    [HFAGopherProtocol registerGopherProtocol];
+
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {

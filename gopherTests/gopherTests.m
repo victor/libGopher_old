@@ -6,7 +6,13 @@
 //  Copyright (c) 2013 Hand Forged Apps. All rights reserved.
 //
 
-#import "gopherTests.h"
+
+#import <SenTestingKit/SenTestingKit.h>
+
+@interface gopherTests : SenTestCase
+
+@end
+
 
 @implementation gopherTests
 
@@ -24,9 +30,13 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testSchemeRegistration
 {
-    STFail(@"Unit tests are not implemented yet in gopherTests");
-}
+//    NSURL *gopherURL = [NSURL URLWithString:@"gopher://gopher.floodgap.com:70/"];
+    NSURL *gopherURL = [NSURL URLWithString:@"gopher://test"];
 
+    NSData *result = [NSData dataWithContentsOfURL:gopherURL];
+
+    STAssertEqualObjects(@"Registration successful!", [[NSString alloc] initWithData:result encoding:NSUTF8StringEncoding], @"Not successfully registered");
+}
 @end

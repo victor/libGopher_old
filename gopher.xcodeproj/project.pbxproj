@@ -24,6 +24,7 @@
 		578F327D172C56B2004B3C14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 578F3255172C56B2004B3C14 /* Foundation.framework */; };
 		578F3285172C56B2004B3C14 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 578F3283172C56B2004B3C14 /* InfoPlist.strings */; };
 		578F3288172C56B2004B3C14 /* gopherTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 578F3287172C56B2004B3C14 /* gopherTests.m */; };
+		578F3294172C5857004B3C14 /* HFAGopherProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 578F3293172C5857004B3C14 /* HFAGopherProtocol.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,8 +59,9 @@
 		578F327A172C56B2004B3C14 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		578F3282172C56B2004B3C14 /* gopherTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "gopherTests-Info.plist"; sourceTree = "<group>"; };
 		578F3284172C56B2004B3C14 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		578F3286172C56B2004B3C14 /* gopherTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gopherTests.h; sourceTree = "<group>"; };
 		578F3287172C56B2004B3C14 /* gopherTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = gopherTests.m; sourceTree = "<group>"; };
+		578F3292172C5857004B3C14 /* HFAGopherProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFAGopherProtocol.h; sourceTree = "<group>"; };
+		578F3293172C5857004B3C14 /* HFAGopherProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFAGopherProtocol.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 		578F3259172C56B2004B3C14 /* gopher */ = {
 			isa = PBXGroup;
 			children = (
+				578F3291172C5820004B3C14 /* protocol */,
 				578F3262172C56B2004B3C14 /* HFAAppDelegate.h */,
 				578F3263172C56B2004B3C14 /* HFAAppDelegate.m */,
 				578F326B172C56B2004B3C14 /* HFAViewController.h */,
@@ -147,7 +150,6 @@
 		578F3280172C56B2004B3C14 /* gopherTests */ = {
 			isa = PBXGroup;
 			children = (
-				578F3286172C56B2004B3C14 /* gopherTests.h */,
 				578F3287172C56B2004B3C14 /* gopherTests.m */,
 				578F3281172C56B2004B3C14 /* Supporting Files */,
 			);
@@ -161,6 +163,15 @@
 				578F3283172C56B2004B3C14 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		578F3291172C5820004B3C14 /* protocol */ = {
+			isa = PBXGroup;
+			children = (
+				578F3292172C5857004B3C14 /* HFAGopherProtocol.h */,
+				578F3293172C5857004B3C14 /* HFAGopherProtocol.m */,
+			);
+			path = protocol;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,6 +289,7 @@
 				578F3260172C56B2004B3C14 /* main.m in Sources */,
 				578F3264172C56B2004B3C14 /* HFAAppDelegate.m in Sources */,
 				578F326D172C56B2004B3C14 /* HFAViewController.m in Sources */,
+				578F3294172C5857004B3C14 /* HFAGopherProtocol.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
