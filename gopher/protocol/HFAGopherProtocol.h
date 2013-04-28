@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HFAGopherProtocol : NSURLProtocol
+@interface HFAGopherProtocol : NSURLProtocol<NSStreamDelegate>
 
 + (void) registerGopherProtocol;
 

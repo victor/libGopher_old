@@ -7,6 +7,13 @@
 //
 
 #import "HFAGopherProtocol.h"
+#import "NSStream+StreamToHost.h"
+
+@interface HFAGopherProtocol ()
+@property (nonatomic, strong) NSMutableData *receivedData;
+@property (nonatomic, strong) NSMutableData *dataToSend;
+@property (nonatomic, weak) id delegate;
+@end
 
 @implementation HFAGopherProtocol
 
@@ -21,17 +28,51 @@
 - (void)startLoading
 {
     NSURLRequest *request = self.request;
-    
-    NSString *host = request.URL.host;
+
+    NSString *hostname = request.URL.host;
+    NSNumber *port = request.URL.port;
+    if (!port)
+        port = @(70);
+
+
     NSData *responseData;
 
-    if ([host isEqualToString:@"test"])
+    if ([hostname isEqualToString:@"test"])
     {
         responseData = [@"Registration successful!" dataUsingEncoding:NSUTF8StringEncoding];
-    } else {
-        // process URL normally
+        [self respondRequest:request withData:responseData];
+        return;
     }
+    // process URL normally
 
+    NSString *selector = [NSString stringWithFormat:@"%@\r\n", [request.URL.path substringFromIndex:1]];
+
+    self.dataToSend = [[selector dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+    NSInputStream *readStream;
+    NSOutputStream *writeStream;
+    [NSStream getStreamsToHostNamed:hostname
+                               port:[port integerValue]
+                        inputStream:&readStream
+                       outputStream:&writeStream];
+
+    
+
+    [readStream setDelegate:self];
+    [writeStream setDelegate:self];
+
+    [readStream scheduleInRunLoop:[NSRunLoop currentRunLoop]
+                          forMode:NSDefaultRunLoopMode];
+    [writeStream scheduleInRunLoop:[NSRunLoop currentRunLoop]
+                          forMode:NSDefaultRunLoopMode];
+
+
+    [readStream open];
+    [writeStream open];
+    [[NSRunLoop currentRunLoop] run];
+}
+
+- (void)respondRequest:(NSURLRequest *)request withData:(NSData *)responseData
+{
     // create response
     NSURLResponse *response = [[NSURLResponse alloc] initWithURL:request.URL
                                                         MIMEType:@"text/plain"
@@ -78,5 +119,77 @@
      method because all subclasses must implement this method. */
 
     return request;
+}
+
+#pragma mark - NSStream delegate
+
+- (void)stream:(NSStream *)stream handleEvent:(NSStreamEvent)eventCode
+{
+    switch (eventCode) {
+        case NSStreamEventHasBytesAvailable:
+        
+            (void) self.receivedData;
+            if (!self.receivedData) {
+                self.receivedData = [[NSMutableData alloc] init];
+            }
+            uint8_t buf[1024];
+            int numBytesRead = [(NSInputStream *)stream read:buf maxLength:1024];
+            if (numBytesRead > 0) {
+                [self.receivedData appendBytes:(const void *)buf length:numBytesRead];
+                NSLog(@"%d bytes read", numBytesRead);
+            } else if (numBytesRead == 0) {
+                NSLog(@"End of stream reached");
+            } else {
+                NSLog(@"Read error occurred");
+            }
+            break;
+
+        case NSStreamEventErrorOccurred: {
+            NSError *error = [stream streamError];
+            NSLog(@"Failed while reading stream; error '%@' (code %d)",
+                  error.localizedDescription, error.code);
+            if ([self.delegate respondsToSelector: @selector(networkingResultsDidFail:)]) {
+                //                [self.delegate networkingResultsDidFail:
+                //               @"An unexpected error occurred while reading from the warehouse server."];
+            }
+            [self cleanupStream:stream];
+        }
+            break;
+        case NSStreamEventEndEncountered: {
+            if ([stream isKindOfClass:[NSInputStream class]]) {
+                [self respondRequest:self.request withData:self.receivedData];
+                self.receivedData = nil;
+            }
+            [self cleanupStream:stream];
+        }
+            break;
+
+        case NSStreamEventNone: {
+            NSLog(@"Nothing to see here. Move along.");
+        }
+            break;
+        case NSStreamEventHasSpaceAvailable: {
+            if ([stream isKindOfClass:[NSOutputStream class]]) {
+                if (self.dataToSend) {
+                    NSInteger bytesWritten = [(NSOutputStream *)stream write:[self.dataToSend bytes] maxLength:[self.dataToSend length]];
+                    NSLog(@"%d bytes written out of %d", bytesWritten, [self.dataToSend length]);
+                    self.dataToSend = nil;
+                }
+            }
+            break;
+        }
+        default:
+            break;
+
+    
+    }
+}
+
+- (void)cleanupStream:(NSStream *)stream
+{
+    [stream removeFromRunLoop:[NSRunLoop currentRunLoop]
+                      forMode:NSDefaultRunLoopMode];
+    [stream close];
+    stream = nil;
 }
 @end

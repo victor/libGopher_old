@@ -25,6 +25,7 @@
 		578F3285172C56B2004B3C14 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 578F3283172C56B2004B3C14 /* InfoPlist.strings */; };
 		578F3288172C56B2004B3C14 /* gopherTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 578F3287172C56B2004B3C14 /* gopherTests.m */; };
 		578F3294172C5857004B3C14 /* HFAGopherProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 578F3293172C5857004B3C14 /* HFAGopherProtocol.m */; };
+		578F3297172D79D4004B3C14 /* NSStream+StreamToHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 578F3296172D79D4004B3C14 /* NSStream+StreamToHost.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,8 @@
 		578F3287172C56B2004B3C14 /* gopherTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = gopherTests.m; sourceTree = "<group>"; };
 		578F3292172C5857004B3C14 /* HFAGopherProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFAGopherProtocol.h; sourceTree = "<group>"; };
 		578F3293172C5857004B3C14 /* HFAGopherProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFAGopherProtocol.m; sourceTree = "<group>"; };
+		578F3295172D79D4004B3C14 /* NSStream+StreamToHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSStream+StreamToHost.h"; sourceTree = "<group>"; };
+		578F3296172D79D4004B3C14 /* NSStream+StreamToHost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSStream+StreamToHost.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +173,8 @@
 			children = (
 				578F3292172C5857004B3C14 /* HFAGopherProtocol.h */,
 				578F3293172C5857004B3C14 /* HFAGopherProtocol.m */,
+				578F3295172D79D4004B3C14 /* NSStream+StreamToHost.h */,
+				578F3296172D79D4004B3C14 /* NSStream+StreamToHost.m */,
 			);
 			path = protocol;
 			sourceTree = "<group>";
@@ -290,6 +295,7 @@
 				578F3264172C56B2004B3C14 /* HFAAppDelegate.m in Sources */,
 				578F326D172C56B2004B3C14 /* HFAViewController.m in Sources */,
 				578F3294172C5857004B3C14 /* HFAGopherProtocol.m in Sources */,
+				578F3297172D79D4004B3C14 /* NSStream+StreamToHost.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
